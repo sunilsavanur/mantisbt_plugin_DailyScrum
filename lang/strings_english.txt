@@ -1,0 +1,26 @@
+<?php
+
+$s_plugin_DailyScrum_configuration = "Configuration";
+$s_plugin_DailyScrum_DailyScrum_Y_N = "Yes";
+$s_plugin_DailyScrum_reset = "Reset Value";
+$s_plugin_DailyScrum_foo_or_bar = "Foo or Bar";
+
+$s_plugin_DailyScrum_menu_daily_scrum = "Daily Scrum";
+$s_plugin_DailyScrum_daily_scrum_summary = "Daily Scrum Summary";
+$s_plugin_DailyScrum_install_db_ds = "Install DB";
+$s_plugin_DailyScrum_daily_scrum_view_menu = "View Today";
+$s_plugin_DailyScrum_dummy = "Dummy";
+$s_plugin_DailyScrum_view_impendiments = "View Open Actions";
+$s_plugin_DailyScrum_view_all_scrums = "View All Scrums";
+$s_plugin_DailyScrum_person_wise_assignments = "View Person Wise";
+$s_plugin_DailyScrum_select_team_member = "Select Team Member";
+
+$s_plugin_DailyScrum_action_items = "Action Items";
+$s_plugin_DailyScrum_status_by_eod = "Status by EOD";
+$s_plugin_DailyScrum_impediments = "Risks";
+$s_plugin_DailyScrum_daily_scrum_date = "Daily Scrum Date";
+$s_plugin_DailyScrum_new_scrum = "New Scrum";
+$s_plugin_DailyScrum_Risk_Resolution = "Action Item Status";
+$s_plugin_DailyScrum_two_weeks_assignments = "Two Week Data";
+
+
