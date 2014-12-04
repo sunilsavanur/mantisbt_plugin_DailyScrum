@@ -2,7 +2,7 @@
 
 html_page_top( );
 	$view_dt	= $_POST['date_year'] . '-' . $_POST['date_month'] . '-' . $_POST['date_day'];
-	//echo $view_dt;
+	echo $view_dt;
 	$today=$view_dt;
 //echo $today;
 ?>

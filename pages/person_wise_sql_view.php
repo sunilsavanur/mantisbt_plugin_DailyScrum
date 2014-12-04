@@ -2,7 +2,7 @@
 
 html_page_top( );
 	$view_dt	= $_POST['date_year'] . '-' . $_POST['date_month'] . '-' . $_POST['date_day'];
-//	echo $_POST['p_handler_id'];
+	//echo $_POST['p_handler_id'];
 	$team_member = $_POST['p_handler_id'];
 //	echo $view_dt;
 ?>
@@ -33,13 +33,22 @@ html_page_top( );
 	$g_project = helper_get_current_project();
 	//echo $g_project;
 	
+	if( !isset($_POST['p_handler_id']) )
+	{
+		echo '<br /><div class="center">';
+		echo  'Please select team member again !' . '<br />';
+		print_bracket_link( plugin_page( 'main_daily_scrum' ), lang_get( 'proceed' ) );
+		echo '</div>';
+		exit();
+	}
+	
 	if( $access_level >= 70) // manager and administrator access
-		$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where project_id=$g_project AND handler_id=$team_member LIMIT 15";
+		$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where project_id=$g_project AND handler_id=$team_member ORDER BY tid DESC LIMIT 100";
 		   
 	if( $access_level == 90) // administrator	
 	{
 		if( $g_project == 0) // and admin selects All Projects
-			$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where handler_id=$team_member LIMIT 15";
+			$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where handler_id=$team_member ORDER BY tid DESC LIMIT 100";
 	}	
 
 	//$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where scrum_date='$today'";
@@ -59,7 +68,7 @@ html_page_top( );
 		// $fieldinfo=mysqli_fetch_field($retval);
 		echo '<table BORDER cellpadding="2" cellspacing="5" class="db-table" align="center">';
 		//echo '<tr><th>TransactionID</th><th>budID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Risks</th><th>Action Status</th>';
-		echo '<tr><th>TransactionID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Risks</th><th>Action Status</th>';
+		echo '<tr><th>TransactionID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Remarks/Risks</th><th>Action Status</th>';
 		while($row2 = mysql_fetch_row($retval)) {
 			echo '<tr>';
 			foreach($row2 as $key=>$value) {

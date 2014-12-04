@@ -1,32 +1,87 @@
 <?php
 
 html_page_top( );
+if(isset($_SESSION['page']))
+{
+	unset($_SESSION['page']);
+	$_SESSION['page'] = basename(__FILE__,'.php');
+	if(isset($_SESSION['data']))
+	{
+		?>
+		<script>
+		alert("<?php print($_SESSION['data']); ?>");
+		</script>
+		<?php
+		unset($_SESSION['data']);
+	}
+}
+else
+{
+	$_SESSION['page'] = basename(__FILE__,'.php');
+}
 
 $today=date('Y-m-d');
 
 function view_date_dropdown($year_limit = 0){
         $html_output = '    <div id="date_select" >'."\n";
-        $html_output .= '        <label align="center" for="date_day">Date of Scrum:</label>'."\n";
-
-        /*days*/
+        $html_output .= '        <label for="date_day">Date of Scrum:</label>'."\n";
+		$date_day=date("d");
+		$date_month=date("n");
+		$date_year=date("Y");
+		$daystr = "";
+		/*days*/
         $html_output .= '           <select name="date_day" id="day_select">'."\n";
+		
             for ($day = 1; $day <= 31; $day++) {
-                $html_output .= '               <option>' . $day . '</option>'."\n";
+				$daystr="";
+				if($day < 10)
+				{
+					$daystr = "0".$day;
+				}
+				else
+				{
+					$daystr = $daystr+$day;
+				}
+                if(strcmp($date_day."",$daystr) == 0)
+				{
+					$html_output .= '               <option selected value='.$daystr.'>' . $daystr . '</option>'."\n";
+				}
+				else
+				{
+					$html_output .= '               <option value='.$daystr.'>' . $daystr . '</option>'."\n";
+				}
             }
         $html_output .= '           </select>'."\n";
 
         /*months*/
         $html_output .= '           <select name="date_month" id="month_select" >'."\n";
         $months = array("", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-            for ($month = 1; $month <= 12; $month++) {
-                $html_output .= '               <option value="' . $month . '">' . $months[$month] . '</option>'."\n";
+            for ($arrayindex = 1; $arrayindex <= 12; $arrayindex++) {
+               // $html_output .= '               <option value="' . $month . '">' . $months[$month] . '</option>'."\n";
+			   if($arrayindex == $date_month)
+			   {
+					$html_output .= '               <option selected value='.$arrayindex.'>' . $arrayindex . '</option>'."\n";
+			   }
+			   else
+			   {
+					$html_output .= '               <option value='.$arrayindex.'>' . $arrayindex . '</option>'."\n";
+			   }
+			    //$html_output .= '               <option value=date("F");>' . $months[$month] . '</option>'."\n";
             }
         $html_output .= '           </select>'."\n";
 
         /*years*/
         $html_output .= '           <select name="date_year" id="year_select">'."\n";
             for ($year = 2012; $year <= (date("Y") - $year_limit); $year++) {
-                $html_output .= '               <option>' . $year . '</option>'."\n";
+                if($date_year == $year)
+				{
+					$html_output .= '               <option selected value='.$year.'>' . $year . '</option>'."\n";
+				}
+				else
+				{
+					$html_output .= '               <option value='.$year.';>' . $year . '</option>'."\n";
+				}
+				//$html_output .= '               <option value=date("Y");>' . $year . '</option>'."\n";
             }
         $html_output .= '           </select>'."\n";
 
@@ -39,13 +94,14 @@ function view_date_dropdown($year_limit = 0){
 //<form action="<?php $_PHP_SELF " method="POST" name="ds_submit">
     return $html_output;
 }
+
 ?>
 
 <html>
 <body>
-<form action="<?php echo plugin_page( 'view_date_specific' ) ?>" method="POST" >
-<h1 align="center">View Daily Scrum </h1>
 
+<h1 align="center">View Daily Scrum </h1>
+<form action="<?php echo plugin_page( 'view_date_specific' ) ?>" method="post" >
 
 </br>
 <?php
@@ -93,7 +149,7 @@ function view_date_dropdown($year_limit = 0){
 		// $fieldinfo=mysqli_fetch_field($retval);
 		echo '<table BORDER cellpadding="2" cellspacing="5" class="db-table" align="center">';
 		//echo '<tr><th>TransactionID</th><th>budID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Risks</th><th>Action Status</th>';
-		echo '<tr><th>TransactionID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Risks</th><th>Action Status</th>';
+		echo '<tr><th>TransactionID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Remarks/Risks</th><th>Action Status</th>';
 		while($row2 = mysql_fetch_row($retval)) {
 			echo '<tr>';
 			foreach($row2 as $key=>$value) {
@@ -123,7 +179,11 @@ function view_date_dropdown($year_limit = 0){
 	mysql_close($conn);
 ?>
 
-<?php echo view_date_dropdown();
+<?php 
+$date_day=date("d");
+$date_month=date("F");
+$date_year=date("Y");
+echo view_date_dropdown();
 $today=date('Y-m-d');
 //echo $today;
 ?>

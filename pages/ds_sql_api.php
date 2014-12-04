@@ -8,16 +8,17 @@ html_page_top( );
 //	echo "Risks are ". $_POST['impediments_description'].  "<br />";
 //	echo "Risks Resolution ". $_POST['risk_resolution'].  "<br />";
 	
-	$dt	= $_POST['date_year'] . '-' . $_POST['date_month'] . '-' . $_POST['date_day'];
+	//$dt	= $_POST['date_year'] . '-' . $_POST['date_month'] . '-' . $_POST['date_day'];
+	$dt	= $_POST['date_year'] . '/' . date("m",strtotime($_POST['date_month'])) . '/' . $_POST['date_day'];
 	if($_POST['date_year'] != date("Y") )
 	{
 		$dt = date("Y/m/d"); //Initialize to today's date
 	}	
 //	echo $dt;
-	$datestamp = strtotime($dt);
+//	$datestamp = strtotime($dt);
 	
 	//$datestamp = date(DATE_ATOM, $datestamp);
-	$datestamp = date("Y/m/d", strtotime($dt));
+//	$datestamp = date("Y/m/d", strtotime($dt));
 //	echo $datestamp;
 
 	$submit = isset( $_POST['ds_submit'] );
@@ -49,30 +50,22 @@ html_page_top( );
 	$sql = "INSERT INTO mantis_daily_scrum_table ".
 		   "(project_id,handler_id,scrum_date, whatisdone, todo, impediments, riskresolution) ".
 		   "VALUES ".
-		   "('$p_project','$_POST[handler_id]','$datestamp','$_POST[what_description]','$_POST[todo_description]','$_POST[impediments_description]','$_POST[risk_resolution]')";
+		   "('$p_project','$_POST[handler_id]','$dt','$_POST[what_description]','$_POST[todo_description]','$_POST[impediments_description]','$_POST[risk_resolution]')";
 		   
 	mysql_select_db('bugtracker');
 	$retval = mysql_query( $sql, $conn );
+	$data="";
 	if(! $retval )
 	{
-	  die('Could not insert row table: ' . mysql_error());
+	  $data = mysql_error();
 	}
-	//echo "Table daily scrum data row inserted successfully\n";
-	printf("Records affected: %d\n", mysql_affected_rows());
+	else
+	{
+		$data = "Records affected: ".mysql_affected_rows();
+	}
+	$_SESSION['data'] = $data;
 	mysql_close($conn);
-
-	//print_successful_redirect( 'plugins/DailyScrum/pages/main_daily_scrum.php' );
-	
-	
-
-		echo '<br /><div class="center">';
-		echo lang_get( 'operation_successful' ) . '<br />';
-		print_bracket_link( plugin_page( 'main_daily_scrum' ), lang_get( 'proceed' ) );
-		echo '</div>';
-		
-
-	
-//}
-	html_page_bottom();
-//}
+	$url = plugin_page( 'main_daily_scrum' );
+	//echo $url;
+	header('Location: '.$url);
 ?>

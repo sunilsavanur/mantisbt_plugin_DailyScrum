@@ -1,8 +1,19 @@
 
 
 <?php
-//require_once( 'ds_sql_api.php' );
 html_page_top( );
+
+
+
+if(isset($_SESSION['data']))
+{
+?>
+<script>
+alert("<?php print($_SESSION['data']); ?>");
+</script>
+<?php
+	unset($_SESSION['data']);	
+}
 
 ?>
 
@@ -15,6 +26,11 @@ html_page_top( );
 
 <h2 align="center"><?php
 print_bracket_link( plugin_page( 'new_scrum' ), plugin_lang_get( 'new_scrum' ) );
+print_bracket_link( plugin_page( 'new_scrum_all' ), plugin_lang_get( 'new_scrum_all' ) );
+?>
+</br>
+</br>
+<?php
 print_bracket_link( plugin_page( 'daily_scrum_view_menu' ), plugin_lang_get( 'daily_scrum_view_menu' ) );
 print_bracket_link( plugin_page( 'view_all_scrums' ), plugin_lang_get( 'view_all_scrums' ) );
 ?>

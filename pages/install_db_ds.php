@@ -18,9 +18,9 @@ $sql = 'CREATE TABLE mantis_daily_scrum_table( '.
 	   'project_id INT NOT NULL, '.
 	   'handler_id INT NOT NULL, '.
 	   'scrum_date    date NOT NULL, '.
-       'whatisdone VARCHAR(255) NOT NULL UNIQUE, '.
-       'todo  VARCHAR(767) NOT NULL, '.
-	   'impediments  VARCHAR(767) NOT NULL, '.
+       'whatisdone VARCHAR(200) NOT NULL UNIQUE, '.
+       'todo  VARCHAR(200) NOT NULL, '.
+	   'impediments  VARCHAR(200) NOT NULL, '.
 	   'riskresolution  VARCHAR(10) NOT NULL, '.
        'primary key ( tid ))';
 
@@ -38,9 +38,9 @@ echo " Table employee created successfully. \n";
 //printf("Records affected: %d\n", mysql_affected_rows());
 
 mysql_close($conn);
-?>
-<?php
-	//echo '<br /><div class="center">';
+
+
+	echo '<br /><div class="center">';
 	echo lang_get( 'operation_successful' ) . '<br />';
 	print_bracket_link( plugin_page( 'main_daily_scrum' ), lang_get( 'proceed' ) );
 	echo '</div>';

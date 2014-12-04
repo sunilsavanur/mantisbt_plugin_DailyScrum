@@ -1,6 +1,24 @@
 <?php
 
 html_page_top( );
+if(isset($_SESSION['page']))
+{
+	unset($_SESSION['page']);
+	$_SESSION['page'] = basename(__FILE__,'.php');
+	if(isset($_SESSION['data']))
+	{
+		?>
+		<script>
+		alert("<?php print($_SESSION['data']); ?>");
+		</script>
+		<?php
+		unset($_SESSION['data']);
+	}
+}
+else
+{
+	$_SESSION['page'] = basename(__FILE__,'.php');
+}
 
 ?>
 
@@ -31,14 +49,14 @@ html_page_top( );
 	//echo $g_project;
 	
 	if( $access_level >= 70) // manager and administrator access
-		$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where project_id=$g_project AND riskresolution='Open' ";
+		$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where project_id=$g_project AND riskresolution='Open' ORDER BY tid DESC";
 	else /// everything else
-		$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where handler_id=$user_id AND project_id=$g_project LIMIT 15";
+		$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where handler_id=$user_id AND project_id=$g_project ORDER BY tid DESC LIMIT 100";
 		   
 	if( $access_level == 90) // administrator	
 	{
 		if( $g_project == 0) // and admin selects All Projects
-			$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where riskresolution='Open'";
+			$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where riskresolution='Open'  ORDER BY tid DESC";
 	}	
 
 	//$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where scrum_date='$today'";
@@ -56,7 +74,7 @@ html_page_top( );
 		// $fieldinfo=mysqli_fetch_field($retval);
 		echo '<table BORDER cellpadding="2" cellspacing="5" class="db-table" align="center">';
 		//echo '<tr><th>TransactionID</th><th>budID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Risks</th><th>Risk Resolution</th>';
-		echo '<tr><th>TransactionID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Risks</th><th>Action Status</th>';
+		echo '<tr><th>TransactionID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Remarks/Risks</th><th>Action Status</th>';
 		while($row2 = mysql_fetch_row($retval)) {
 			echo '<tr>';
 			foreach($row2 as $key=>$value) {

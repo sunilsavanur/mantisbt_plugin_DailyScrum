@@ -23,27 +23,63 @@ html_page_top( );
 function date_dropdown($year_limit = 0){
         $html_output = '    <div id="date_select" >'."\n";
         $html_output .= '        <label for="date_day">Date of Scrum:</label>'."\n";
-
-        /*days*/
+		$date_day=date("d");
+		$date_month=date("F");
+		$date_year=date("Y");
+		$daystr = "";
+		/*days*/
         $html_output .= '           <select name="date_day" id="day_select">'."\n";
+		
             for ($day = 1; $day <= 31; $day++) {
-                $html_output .= '               <option value=date("d");>' . $day . '</option>'."\n";
+				$daystr="";
+				if($day < 10)
+				{
+					$daystr = "0".$day;
+				}
+				else
+				{
+					$daystr = $daystr+$day;
+				}
+                if(strcmp($date_day."",$daystr) == 0)
+				{
+					$html_output .= '               <option selected value='.$daystr.'>' . $daystr . '</option>'."\n";
+				}
+				else
+				{
+					$html_output .= '               <option value='.$daystr.'>' . $daystr . '</option>'."\n";
+				}
             }
         $html_output .= '           </select>'."\n";
 
         /*months*/
         $html_output .= '           <select name="date_month" id="month_select" >'."\n";
         $months = array("", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-            for ($month = 1; $month <= 12; $month++) {
+            for ($arrayindex = 1; $arrayindex <= 12; $arrayindex++) {
                // $html_output .= '               <option value="' . $month . '">' . $months[$month] . '</option>'."\n";
-			    $html_output .= '               <option value=date("F");>' . $months[$month] . '</option>'."\n";
+			   if(strcmp($date_month,$months[$arrayindex]) == 0)
+			   {
+					$html_output .= '               <option selected value='.$months[$arrayindex].'>' . $months[$arrayindex] . '</option>'."\n";
+			   }
+			   else
+			   {
+					$html_output .= '               <option value='.$months[$arrayindex].'>' . $months[$arrayindex] . '</option>'."\n";
+			   }
+			    //$html_output .= '               <option value=date("F");>' . $months[$month] . '</option>'."\n";
             }
         $html_output .= '           </select>'."\n";
 
         /*years*/
         $html_output .= '           <select name="date_year" id="year_select">'."\n";
             for ($year = 2012; $year <= (date("Y") - $year_limit); $year++) {
-                $html_output .= '               <option value=date("Y");>' . $year . '</option>'."\n";
+                if($date_year == $year)
+				{
+					$html_output .= '               <option selected value='.$year.'>' . $year . '</option>'."\n";
+				}
+				else
+				{
+					$html_output .= '               <option value='.$year.'>' . $year . '</option>'."\n";
+				}
+				//$html_output .= '               <option value=date("Y");>' . $year . '</option>'."\n";
             }
         $html_output .= '           </select>'."\n";
 
@@ -117,7 +153,7 @@ echo date_dropdown();?>
 	</br>
 	
 	<tr>
-		<?php echo plugin_lang_get( 'impediments' )?>
+		<?php echo "Remarks/Risks";?>
 		</br>
 		<td>
 			<span class="required">*</span><?php print_documentation_link( 'description' ) ?>

@@ -1,6 +1,13 @@
 <?php
 //function daily_scrum_insert_record($assign_to = 0, $date = 0, $action_items = 0 , $done = 0, $impediments = 0, $ds_submit_button){
 html_page_top( );
+/*
+this session tell about which session 
+$_SESSION['page'] = ;
+
+*/
+
+
 
 //echo $risks_item;
 //$the_risk=htmlspecialchars($_GET["risks_item"]);
@@ -19,14 +26,15 @@ html_page_top( );
 	$the_resolution=$_POST['risk_resolution'];
 	$the_handler_id=$_POST['vhandler_id'];
 	
-//	echo $the_trid;
-//	echo "";
-//	echo $the_todo;
-//	echo "";
-//	echo $the_risk;
-//	echo "";
-//	echo $the_resolution;
-//	echo $_POST['delete'];
+	/*echo $the_handler_id;
+	echo $the_trid;
+	echo "";
+	echo $the_todo;
+	echo "";
+	echo $the_risk;
+	echo "";
+	echo $the_resolution;
+	echo $_POST['delete'];*/
 	
 	
 	$dbhost = 'localhost';
@@ -42,7 +50,7 @@ html_page_top( );
 //	echo " ";
 
 	$access_level = current_user_get_access_level();
-
+	
 
 	//$sql = "SELECT tid,handler_id,scrum_date,whatisdone,todo,impediments,riskresolution FROM `mantis_daily_scrum_table` where project_id=$g_project";		   
 	
@@ -79,22 +87,22 @@ html_page_top( );
 	mysql_select_db('bugtracker');
 	//echo $sql;
 	$retval = mysql_query( $sql, $conn );
+	$data = "";
 	if(! $retval )
 	{
-		echo $sql;
-	  die('Could not UPDATE row table: ' . mysql_error());
+		 $data = mysql_error();
 	}
-//	echo "Table daily scrum data row updated successfully\n";
-	// Commit transaction
-	printf("Records affected: %d\n", mysql_affected_rows());
+	else
+	{
+		$data = "Records affected: ". mysql_affected_rows();
+	}
+	
+	
 	mysql_close($conn);
-
-	echo '<br /><div class="center">';
-	echo lang_get( 'operation_successful' ) . '<br />';
-	print_bracket_link( plugin_page( 'main_daily_scrum' ), lang_get( 'proceed' ) );
-	echo '</div>';
-		
-
+	$url = plugin_page($_SESSION['page']);
+	echo $url;
+	$_SESSION['data'] = $data;
+	header('Location: '.$url);
 	html_page_bottom();
 
 ?>

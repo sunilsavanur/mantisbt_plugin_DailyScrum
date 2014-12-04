@@ -12,8 +12,8 @@ class DailyScrumPlugin extends MantisPlugin {
     );
  
     $this->author      = 'Sunil Savanur';
-    $this->contact     = 'b3204sunil@gmail.com';
-    $this->url         = 'http://sunilsavanur.wordpress.com/';
+    $this->contact     = 'Sunil.Savanur@h.com';
+    $this->url         = 'http://local';
   }
  
 	function events() {
@@ -31,7 +31,7 @@ class DailyScrumPlugin extends MantisPlugin {
 			'EVENT_MENU_MAIN' => 'main_ds_menu',
 			//'EVENT_MENU_SUMMARY' => 'main_dummy',
 			//'EVENT_LAYOUT_CONTENT_BEGIN' => 'daily_scrum_view_menu',
-			//'EVENT_MENU_SUMMARY' => 'install_db_ds',
+			'EVENT_MENU_SUMMARY' => 'install_db_ds',
         );
     }
  
@@ -82,9 +82,9 @@ class DailyScrumPlugin extends MantisPlugin {
 		return array( '<a href="' . plugin_page( 'summary_daily_scrum' ) . '">' . plugin_lang_get( 'daily_scrum_summary' ) . '</a>', );
 	}
 
-  	//function install_db_ds( ) {
-		//return array( '<a href="' . plugin_page( 'install_db_ds' ) . '">' . plugin_lang_get( 'install_db_ds' ) . '</a>', );
-	//}	
+  	function install_db_ds( ) {
+		return array( '<a href="' . plugin_page( 'install_db_ds' ) . '">' . plugin_lang_get( 'install_db_ds' ) . '</a>', );
+	}	
 	
 	function schema() {
 //	 return array ( array('CreateTableSQL',

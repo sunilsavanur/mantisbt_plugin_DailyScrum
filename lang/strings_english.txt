@@ -19,7 +19,8 @@ $s_plugin_DailyScrum_action_items = "Action Items";
 $s_plugin_DailyScrum_status_by_eod = "Status by EOD";
 $s_plugin_DailyScrum_impediments = "Risks";
 $s_plugin_DailyScrum_daily_scrum_date = "Daily Scrum Date";
-$s_plugin_DailyScrum_new_scrum = "New Scrum";
+$s_plugin_DailyScrum_new_scrum = "New Scrum (Individual)";
+$s_plugin_DailyScrum_new_scrum_all = "New Scrum for All Team";
 $s_plugin_DailyScrum_Risk_Resolution = "Action Item Status";
 $s_plugin_DailyScrum_two_weeks_assignments = "Two Week Data";
 

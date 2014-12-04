@@ -1,6 +1,24 @@
 <?php
 
 html_page_top( );
+if(isset($_SESSION['page']))
+{
+	unset($_SESSION['page']);
+	$_SESSION['page'] = basename(__FILE__,'.php');
+	if(isset($_SESSION['data']))
+	{
+		?>
+		<script>
+		alert("<?php print($_SESSION['data']); ?>");
+		</script>
+		<?php
+		unset($_SESSION['data']);
+	}
+}
+else
+{
+	$_SESSION['page'] = basename(__FILE__,'.php');
+}
 
 ?>
 

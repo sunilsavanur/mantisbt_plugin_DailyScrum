@@ -1,6 +1,25 @@
 <?php
 
 html_page_top( );
+if(isset($_SESSION['page']))
+{
+	unset($_SESSION['page']);
+	$_SESSION['page'] = basename(__FILE__,'.php');
+	if(isset($_SESSION['data']))
+	{
+		?>
+		<script>
+		alert("<?php print($_SESSION['data']); ?>");
+		</script>
+		<?php
+		unset($_SESSION['data']);
+	}
+}
+else
+{
+	$_SESSION['page'] = basename(__FILE__,'.php');
+}
+
 $today=date('Y-m-d');
 //echo $today;
 
@@ -59,7 +78,7 @@ $back_date=date('Y-m-d', $two_wks);
 		// $fieldinfo=mysqli_fetch_field($retval);
 		echo '<table BORDER cellpadding="2" cellspacing="5" class="db-table" align="center">';
 		//echo '<tr><th>TransactionID</th><th>budID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Risks</th><th>Action Status</th>';
-		echo '<tr><th>TransactionID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Risks</th><th>Action Status</th>';
+		echo '<tr><th>TransactionID</th><th>handlerID</th><th>Date</th><th>Action</th><th>EOD status</th><th>Remarks/Risks</th><th>Action Status</th>';
 		while($row2 = mysql_fetch_row($retval)) {
 			echo '<tr>';
 			foreach($row2 as $key=>$value) {
